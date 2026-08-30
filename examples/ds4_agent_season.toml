@@ -1,0 +1,64 @@
+# Full-year accounting with a 90-day decision season. All local water-system,
+# data-center, and future operating values are explicit simulation assumptions.
+[location]
+profile_id = "inzai_agent_season_hypothesis"
+label_ja = "千葉県印西市・千葉ニュータウン（仮定シナリオ）"
+study_area = "千葉ニュータウンを題材にした合成配水区域"
+water_service_area = "千葉県営水道・千葉ニュータウン系統（合成境界）"
+source_system = "利根川水系・北総浄水場系統の概念モデル"
+evidence_scope = "real_context_synthetic_inputs"
+
+[simulation]
+name = "inzai_250mw_agent_decision_season"
+start_date = "2026-08-26"
+days = 365
+seed = 20260827
+
+[community]
+population = 70_760
+per_capita_potable_demand_l_per_day = 280.0
+monthly_demand_multipliers = [0.94, 0.94, 0.98, 1.00, 1.02, 1.05, 1.08, 1.146, 1.04, 0.99, 0.94, 0.91]
+
+[reservoir]
+initial_storage_l = 32_000_000.0
+storage_capacity_l = 40_000_000.0
+
+[source]
+mode = "calibrated_service"
+source_l_per_day = 0.0
+service_headroom_fraction = 0.105
+monthly_source_multipliers = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+scenario_multiplier = 1.0
+
+[allocation]
+policy = "resident_first"
+
+[comparison]
+drought_source_multiplier = 0.93
+reclaimed_water_shares = [0.0, 0.02, 0.25, 0.50]
+
+[agents]
+enabled = true
+action_effects_enabled = true
+restriction_trigger_storage_fraction = 0.25
+lift_trigger_storage_fraction = 0.55
+restriction_multiplier = 0.75
+history_limit = 12
+decision_interval_days = 14
+decision_start_day = 1
+decision_end_day = 90
+event_decisions_enabled = true
+max_decision_rounds = 8
+
+[[datacenters.facilities]]
+name = "hypothetical_250mw_campus"
+start_day = 31
+it_load_mw = 250.0
+utilization = 0.80
+wue_l_per_kwh = 1.10
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.70
+blowdown_share = 0.20
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05

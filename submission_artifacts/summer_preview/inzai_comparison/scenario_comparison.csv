@@ -1,0 +1,16 @@
+scenario,scenario_label,source_condition,climate_internal,resident_shortage_ml,additional_resident_shortage_vs_no_dc_ml,datacenter_potable_withdrawal_ml,datacenter_potable_consumptive_use_ml,datacenter_reclaimed_withdrawal_ml,final_local_buffer_ml,final_regional_source_ml,first_local_buffer_empty_day,first_resident_shortage_day,resident_shortage_days,reclaimed_water_share_input,reclaimed_water_context
+normal_no_datacenter,Synthetic baseline — no data center,synthetic_baseline,normal,0.0,0.0,0.0,0.0,0.0,27.394688,0.0,,,0,,not_applicable_no_datacenter
+normal_dc_no_reclaimed_resident_first,"Synthetic baseline — single DC, resident-first",synthetic_baseline,normal,0.0,0.0,60.8256,42.57792,0.0,26.549888,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_dc_no_reclaimed_proportional,"Synthetic baseline — single DC, proportional",synthetic_baseline,normal,0.0,0.0,60.8256,42.57792,0.0,26.549888,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+drought_no_datacenter,Synthetic drought stress — no data center,synthetic_drought_stress,drought,0.0,0.0,0.0,0.0,0.0,27.394688,0.0,,,0,,not_applicable_no_datacenter
+drought_dc_no_reclaimed_resident_first,"Synthetic drought stress — single DC, resident-first",synthetic_drought_stress,drought,0.0,0.0,60.8256,42.57792,0.0,8.685432,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_dc_single_facility,Synthetic baseline — single DC,synthetic_baseline,normal,0.0,0.0,60.8256,42.57792,0.0,26.549888,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_dc_concentrated_facilities,Synthetic baseline — three concentrated facilities,synthetic_baseline,normal,0.0,0.0,119.3184,83.256336,0.0,24.648509,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_dc_large_campus_resident_first,"Synthetic baseline — 250 MW sensitivity, resident-first",synthetic_baseline,normal,0.0,0.0,189.5472,132.68304,0.0,0.0,0.0,39,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_dc_large_campus_proportional,"Synthetic baseline — 250 MW sensitivity, proportional",synthetic_baseline,normal,153.528623,153.528623,343.075823,240.153076,0.0,0.0,0.0,39,39,64,0.0,baseline_no_dedicated_reclaimed_supply
+normal_dc_added_distribution_reservoir,"Synthetic baseline — single DC, added distribution reservoir",synthetic_baseline,normal,0.0,0.0,60.8256,42.57792,0.0,46.549888,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_dc_with_onsite_storage,"Synthetic baseline — single DC, onsite storage",synthetic_baseline,normal,0.0,0.0,60.8256,42.57792,0.0,26.549888,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_reclaimed_sensitivity_00pct,Synthetic baseline — reclaimed water 0%,synthetic_baseline,normal,0.0,0.0,60.8256,42.57792,0.0,26.549888,0.0,,,0,0.0,baseline_no_dedicated_reclaimed_supply
+normal_reclaimed_sensitivity_02pct,Synthetic baseline — reclaimed water 2%,synthetic_baseline,normal,0.0,0.0,59.609088,41.726362,1.216512,26.566784,0.0,,,0,0.02,low_use_sensitivity_not_an_observed_dc_rate
+normal_reclaimed_sensitivity_25pct,Synthetic baseline — reclaimed water 25%,synthetic_baseline,normal,0.0,0.0,45.6192,31.93344,15.2064,26.761088,0.0,,,0,0.25,hypothetical_infrastructure_sensitivity
+normal_reclaimed_sensitivity_50pct,Synthetic baseline — reclaimed water 50%,synthetic_baseline,normal,0.0,0.0,30.4128,21.28896,30.4128,26.972288,0.0,,,0,0.5,hypothetical_infrastructure_sensitivity

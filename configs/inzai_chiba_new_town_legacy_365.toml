@@ -1,0 +1,101 @@
+# Archived physical configuration for the existing 2026-08-26 DS4 audit logs.
+# Do not use this profile for the current June 1 to September 10 summer demo.
+[location]
+profile_id = "inzai_chiba_new_town_prefectural_water"
+label_ja = "千葉県印西市・千葉ニュータウン"
+study_area = "千葉ニュータウンを中心とする県営水道給水区域の合成モデル"
+water_service_area = "千葉県営水道・千葉ニュータウン系統（合成境界）"
+source_system = "利根川水系9ダム・北総浄水場系統の概念モデル"
+evidence_scope = "mixed_observed_and_synthetic"
+
+[simulation]
+name = "inzai_chiba_new_town_observed_counterfactual"
+start_date = "2026-08-26"
+days = 365
+seed = 20260827
+
+[community]
+population = 70_760
+per_capita_potable_demand_l_per_day = 280.0
+monthly_demand_multipliers = [0.94, 0.94, 0.98, 1.00, 1.02, 1.05, 1.08, 1.146, 1.04, 0.99, 0.94, 0.91]
+
+[reservoir]
+initial_storage_l = 32_000_000.0
+storage_capacity_l = 40_000_000.0
+
+[source]
+mode = "calibrated_service"
+source_l_per_day = 0.0
+service_headroom_fraction = 0.105
+monthly_source_multipliers = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+scenario_multiplier = 1.0
+
+[regional_source]
+name = "利根川上流9ダム"
+observed_date = "2026-08-26"
+initial_storage_l = 342_070_000_000.0
+capacity_l = 368_490_000_000.0
+reference_daily_net_change_l = 0.0
+evidence_url = "https://www.water.go.jp/honsya/honsya/suigen/sokuhou/toneara/"
+
+[allocation]
+policy = "resident_first"
+
+[comparison]
+drought_source_multiplier = 0.93
+reclaimed_water_shares = [0.0, 0.02, 0.25, 0.50]
+added_reservoir_capacity_l = 20_000_000.0
+added_reservoir_commission_day = 120
+added_reservoir_fill_l = 10_000_000.0
+dc_onsite_storage_capacity_l = 3_000_000.0
+dc_onsite_initial_storage_l = 3_000_000.0
+dc_onsite_max_refill_l_per_day = 1_000_000.0
+large_campus_it_load_mw = 250.0
+drought_regional_net_change_l_per_day = -300_000_000.0
+
+[agents]
+enabled = true
+action_effects_enabled = true
+restriction_trigger_storage_fraction = 0.25
+lift_trigger_storage_fraction = 0.55
+restriction_multiplier = 0.75
+history_limit = 8
+
+[[datacenters.facilities]]
+name = "inzai_synthetic_dc_alpha"
+start_day = 31
+it_load_mw = 40.0
+utilization = 0.80
+wue_l_per_kwh = 1.10
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.70
+blowdown_share = 0.20
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05
+
+[[datacenters.facilities]]
+name = "inzai_synthetic_dc_beta"
+start_day = 120
+it_load_mw = 35.0
+utilization = 0.75
+wue_l_per_kwh = 1.00
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.68
+blowdown_share = 0.22
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05
+
+[[datacenters.facilities]]
+name = "inzai_synthetic_dc_gamma"
+start_day = 210
+it_load_mw = 30.0
+utilization = 0.85
+wue_l_per_kwh = 0.90
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.72
+blowdown_share = 0.18
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05

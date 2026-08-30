@@ -1,0 +1,72 @@
+[simulation]
+name = "synthetic_inland_region_mvp"
+start_date = "2026-01-01"
+days = 90
+seed = 20260827
+
+[community]
+population = 100_000
+per_capita_potable_demand_l_per_day = 250.0
+
+[reservoir]
+initial_storage_l = 350_000_000.0
+storage_capacity_l = 400_000_000.0
+
+[source]
+source_l_per_day = 22_000_000.0
+monthly_source_multipliers = [0.90, 0.85, 1.00, 1.05, 1.10, 1.15, 1.00, 0.90, 0.85, 0.90, 0.95, 0.90]
+scenario_multiplier = 1.0
+
+[allocation]
+policy = "resident_first"
+
+[comparison]
+drought_source_multiplier = 0.55
+reclaimed_water_shares = [0.0, 0.02, 0.25, 0.50]
+
+[agents]
+enabled = true
+action_effects_enabled = true
+restriction_trigger_storage_fraction = 0.25
+lift_trigger_storage_fraction = 0.55
+restriction_multiplier = 0.75
+history_limit = 8
+
+[[datacenters.facilities]]
+name = "facility_alpha"
+start_day = 15
+it_load_mw = 30.0
+utilization = 0.80
+wue_l_per_kwh = 1.20
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.70
+blowdown_share = 0.20
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05
+
+[[datacenters.facilities]]
+name = "facility_beta"
+start_day = 30
+it_load_mw = 25.0
+utilization = 0.75
+wue_l_per_kwh = 1.10
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.68
+blowdown_share = 0.22
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05
+
+[[datacenters.facilities]]
+name = "facility_gamma"
+start_day = 45
+it_load_mw = 20.0
+utilization = 0.85
+wue_l_per_kwh = 1.00
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.72
+blowdown_share = 0.18
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05

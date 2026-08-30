@@ -1,0 +1,127 @@
+# Mixed-evidence profile. Population and system-average demand are observed
+# references; local capacity, headroom, demand shape, drought trajectory, WUE,
+# and facility parameters are explicit assumptions. A complete 2025 rainfall
+# and wide-area reservoir trace is shown as context, not local allocatable water.
+[location]
+profile_id = "inzai_chiba_new_town_prefectural_water"
+label_ja = "千葉県印西市・千葉ニュータウン"
+study_area = "千葉ニュータウンを中心とする県営水道給水区域の合成モデル"
+water_service_area = "千葉県営水道・千葉ニュータウン系統（合成境界）"
+source_system = "利根川・江戸川／北総浄水場系統の概念モデル"
+evidence_scope = "mixed_observed_and_synthetic"
+
+[simulation]
+name = "inzai_chiba_new_town_summer_counterfactual"
+# Inclusive window: 2026-06-01 through 2026-09-10 (102 days).
+start_date = "2026-06-01"
+days = 102
+seed = 20260827
+
+[community]
+# R8 July population-table approximation for Inzai New Town districts:
+# 61,058 (NT Inzai) + 4,941 (NT Inba) + 4,761 (NT Motono).
+population = 70_760
+# R6 Chiba Prefectural Waterworks system-wide observed average supply per person.
+per_capita_potable_demand_l_per_day = 280.0
+# Synthetic monthly shape normalized around the observed annual average.
+monthly_demand_multipliers = [0.94, 0.94, 0.98, 1.00, 1.02, 1.05, 1.08, 1.146, 1.04, 0.99, 0.94, 0.91]
+
+[reservoir]
+# R6 Chiba Waterworks yearbook: Hokuso purification plant distribution
+# reservoir effective capacity is 48,000 m3. It serves a wider area than Inzai,
+# so the model uses it as an operating-buffer proxy, not Inzai-only stock.
+# The counterfactual deliberately starts this proxy full on June 1.
+initial_storage_l = 48_000_000.0
+storage_capacity_l = 48_000_000.0
+
+[observed_context]
+# 2026-09-10 is not yet observable at build time, so the last complete summer
+# is replayed by month/day as historical context behind the 2026 counterfactual.
+precipitation_csv = "../data/observed/jma_abiko_daily_precipitation_2025-06-01_2025-09-10.csv"
+precipitation_station = "気象庁 我孫子アメダス（45061）"
+precipitation_reference_start_date = "2025-06-01"
+precipitation_source_url = "https://www.data.jma.go.jp/stats/etrn/view/daily_a1.php?block_no=0376&month=06&prec_no=45&year=2025"
+precipitation_used_as_inflow = false
+reservoir_csv = "../data/observed/tone_upper_9_reservoirs_2025_10day.csv"
+reservoir_name = "利根川上流9ダム（2025年確定値）"
+reservoir_reference_start_date = "2025-06-01"
+reservoir_source_url = "https://www.water.go.jp/honsya/honsya/suigen/junpo/past/2025/junpo20250601.html"
+reservoir_interpolation = "linear_between_observations"
+reservoir_used_for_allocation = false
+
+[source]
+# Calibrated mode derives baseline service inflow from observed average demand plus
+# explicit headroom. Existing community use is therefore stable in the no-DC case.
+mode = "calibrated_service"
+source_l_per_day = 0.0
+service_headroom_fraction = 0.105
+monthly_source_multipliers = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+scenario_multiplier = 1.0
+
+# The observed context is not added to this synthetic service inflow. Rainfall
+# conversion would require catchment, runoff, capture, treatment and lag inputs.
+
+[allocation]
+policy = "resident_first"
+
+[comparison]
+drought_source_multiplier = 0.93
+reclaimed_water_shares = [0.0, 0.02, 0.25, 0.50]
+added_reservoir_capacity_l = 20_000_000.0
+added_reservoir_commission_day = 62
+# Explicit external/pre-commission fill; counted as inflow on commissioning day.
+added_reservoir_fill_l = 10_000_000.0
+dc_onsite_storage_capacity_l = 3_000_000.0
+dc_onsite_initial_storage_l = 3_000_000.0
+dc_onsite_max_refill_l_per_day = 1_000_000.0
+# IT-load sensitivity only; not the announced utility capacity of a real campus.
+large_campus_it_load_mw = 250.0
+# Synthetic stress trajectory; not an official forecast.
+drought_regional_net_change_l_per_day = -300_000_000.0
+
+[agents]
+enabled = true
+action_effects_enabled = true
+restriction_trigger_storage_fraction = 0.25
+lift_trigger_storage_fraction = 0.55
+restriction_multiplier = 0.75
+history_limit = 8
+
+[[datacenters.facilities]]
+name = "inzai_synthetic_dc_alpha"
+start_day = 31
+it_load_mw = 40.0
+utilization = 0.80
+wue_l_per_kwh = 1.10
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.70
+blowdown_share = 0.20
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05
+
+[[datacenters.facilities]]
+name = "inzai_synthetic_dc_beta"
+start_day = 46
+it_load_mw = 35.0
+utilization = 0.75
+wue_l_per_kwh = 1.00
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.68
+blowdown_share = 0.22
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05
+
+[[datacenters.facilities]]
+name = "inzai_synthetic_dc_gamma"
+start_day = 62
+it_load_mw = 30.0
+utilization = 0.85
+wue_l_per_kwh = 0.90
+potable_water_share = 1.0
+reclaimed_water_share = 0.0
+evaporation_share = 0.72
+blowdown_share = 0.18
+regional_return_share = 0.05
+recoverable_wastewater_share = 0.05
