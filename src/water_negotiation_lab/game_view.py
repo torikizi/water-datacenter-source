@@ -875,6 +875,10 @@ def _compact_agent_run(
     provider_type = provider_metadata.get("provider_type")
     is_mock = provider_type == "mock" or bool(provider_metadata.get("mock"))
     is_ds4 = provider_type == "ds4"
+    fallback_used = bool(provider_metadata.get("fallback_used"))
+    ds4_not_configured = (
+        provider_metadata.get("selection_reason") == "ds4_not_configured"
+    )
     legacy_ds4 = (
         provider_type is None
         and provider_metadata.get("model") == "deepseek-v4-flash"
@@ -883,7 +887,12 @@ def _compact_agent_run(
     is_historical_sequence = any(
         "decision_phase" not in event.get("role", {}) for event in events
     )
-    model = "MockProvider" if is_mock else provider_metadata.get("model", "provider未確認")
+    if fallback_used:
+        model = "MockProvider（DS4接続失敗から自動切替）"
+    elif ds4_not_configured:
+        model = "MockProvider（DS4未設定）"
+    else:
+        model = "MockProvider" if is_mock else provider_metadata.get("model", "provider未確認")
     valid_count = sum(bool(event["valid"]) for event in events)
     if legacy_long_response_count:
         agent_audit = (
@@ -903,7 +912,15 @@ def _compact_agent_run(
     return {
         "id": "agent_decision_season",
         "label": (
-            "夏季〜初秋モック｜4者会議・250MWストレス"
+            (
+                "DS4接続失敗→再現モック｜4者会議・250MWストレス"
+                if fallback_used
+                else (
+                    "DS4未設定→再現モック｜4者会議・250MWストレス"
+                    if ds4_not_configured
+                    else "夏季〜初秋モック｜4者会議・250MWストレス"
+                )
+            )
             if is_mock
             else (
                 (

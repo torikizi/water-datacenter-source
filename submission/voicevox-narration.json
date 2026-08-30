@@ -1,0 +1,80 @@
+{
+  "generator": "VOICEVOX",
+  "engine_version": "0.25.2",
+  "speaker": "玄野武宏",
+  "style": "ノーマル",
+  "style_id": 11,
+  "required_credit": "VOICEVOX:玄野武宏(CV:ガロ)",
+  "video_duration_seconds": 75.533333,
+  "audio_format": {
+    "codec": "PCM signed 16-bit little-endian",
+    "sample_rate_hz": 24000,
+    "channels": 1
+  },
+  "segments": [
+    {
+      "index": 1,
+      "start_seconds": 0.35,
+      "window_end_seconds": 7.45,
+      "audio_duration_seconds": 6.603,
+      "speed_scale": 1.071,
+      "text": "データセンターの設備アイティー負荷が増えると、住民が使える飲用可能な上水は、いつ減り始めるのでしょうか。"
+    },
+    {
+      "index": 2,
+      "start_seconds": 8.05,
+      "window_end_seconds": 17.45,
+      "audio_duration_seconds": 8.725,
+      "speed_scale": 0.9395,
+      "text": "印西を題材に、六月一日から九月十日までの百二日を、再生水ゼロパーセント、比例配分で比較します。"
+    },
+    {
+      "index": 3,
+      "start_seconds": 18.05,
+      "window_end_seconds": 25.4,
+      "audio_duration_seconds": 5.621,
+      "speed_scale": 0.9,
+      "text": "データセンターなしでは、住民需要を全量供給し、不足はゼロです。"
+    },
+    {
+      "index": 4,
+      "start_seconds": 26.05,
+      "window_end_seconds": 36.55,
+      "audio_duration_seconds": 9.771,
+      "speed_scale": 0.9492,
+      "text": "設備負荷を百二十四点六メガワットにすると、期間内の不足はゼロ。ただし期末の水は、ゼロ点ゼロ七五メガリットルまで減ります。"
+    },
+    {
+      "index": 5,
+      "start_seconds": 37.05,
+      "window_end_seconds": 49.35,
+      "audio_duration_seconds": 9.419,
+      "speed_scale": 0.9,
+      "text": "わずかゼロ点一メガワット上げた百二十四点七メガワットでは、最終日に初めて、ゼロ点ゼロ六八メガリットル不足します。"
+    },
+    {
+      "index": 6,
+      "start_seconds": 50.15,
+      "window_end_seconds": 57.65,
+      "audio_duration_seconds": 6.976,
+      "speed_scale": 1.0521,
+      "text": "次に、二百五十メガワットのケースを再生します。住民の水不足は、三十九日目から始まります。"
+    },
+    {
+      "index": 7,
+      "start_seconds": 58.35,
+      "window_end_seconds": 65.35,
+      "audio_duration_seconds": 6.507,
+      "speed_scale": 1.2928,
+      "text": "百二日累計で、住民向け上水は、データセンターなしより百五十三点五三メガリットル、約七パーセント減ります。"
+    },
+    {
+      "index": 8,
+      "start_seconds": 65.75,
+      "window_end_seconds": 75.15,
+      "audio_duration_seconds": 8.747,
+      "speed_scale": 1.0408,
+      "text": "設備負荷が増えるほど、水利用型冷却の需要も増えます。これは現実の印西市の予測ではなく、条件差を比べるシミュレーションです。"
+    }
+  ]
+}

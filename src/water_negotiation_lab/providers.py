@@ -18,8 +18,15 @@ class LLMProvider(Protocol):
     def complete(self, messages: list[dict[str, str]], *, seed: int) -> ProviderResponse: ...
 
 
+class ProviderRequestError(RuntimeError):
+    """A provider transport or response-envelope failure safe to fall back from."""
+
+
 class MockProvider:
     """Deterministic rule-backed provider used for tests and offline runs."""
+
+    def __init__(self, *, metadata: dict[str, Any] | None = None) -> None:
+        self.metadata = dict(metadata or {})
 
     def complete(self, messages: list[dict[str, str]], *, seed: int) -> ProviderResponse:
         request = json.loads(messages[-1]["content"])
@@ -92,7 +99,11 @@ class MockProvider:
                 }
         return ProviderResponse(
             text=json.dumps(result, ensure_ascii=False),
-            metadata={"provider_type": "mock", "mock": True},
+            metadata={
+                **self.metadata,
+                "provider_type": "mock",
+                "mock": True,
+            },
         )
 
 
@@ -133,12 +144,14 @@ class DS4ChatProvider:
         max_tokens: int = 300,
         timeout_seconds: float = 120.0,
         api_key: str | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> None:
         self.endpoint = f"{base_url.rstrip('/')}/chat/completions"
         self.model = model
         self.max_tokens = max_tokens
         self.timeout_seconds = timeout_seconds
         self.api_key = api_key
+        self.metadata = dict(metadata or {})
         self._opener = urllib.request.build_opener(_AuthorizationSafeRedirectHandler())
 
     def complete(self, messages: list[dict[str, str]], *, seed: int) -> ProviderResponse:
@@ -163,17 +176,25 @@ class DS4ChatProvider:
         try:
             with self._opener.open(request, timeout=self.timeout_seconds) as response:
                 body = json.loads(response.read().decode("utf-8"))
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
-            raise RuntimeError(f"DS4 request failed: {exc}") from exc
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            UnicodeDecodeError,
+            json.JSONDecodeError,
+        ) as exc:
+            raise ProviderRequestError(f"DS4 request failed: {exc}") from exc
         try:
             content = body["choices"][0]["message"]["content"]
         except (KeyError, IndexError, TypeError) as exc:
-            raise RuntimeError("DS4 response did not contain chat completion content") from exc
+            raise ProviderRequestError(
+                "DS4 response did not contain chat completion content"
+            ) from exc
         if not isinstance(content, str):
-            raise RuntimeError("DS4 response content was not a string")
+            raise ProviderRequestError("DS4 response content was not a string")
         return ProviderResponse(
             text=content,
             metadata={
+                **self.metadata,
                 "provider_type": "ds4",
                 "model": body.get("model", self.model),
                 "usage": body.get("usage", {}),

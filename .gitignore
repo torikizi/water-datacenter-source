@@ -27,3 +27,5 @@ submission/*.inspect.ndjson
 submission/water-negotiation-lab-4slides/
 submission/*.pptx
 submission/*.mp4
+submission/*.wav
+submission/voicevox-credit.png

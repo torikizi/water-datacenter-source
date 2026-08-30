@@ -8,7 +8,7 @@ Water Negotiation Labは新規に設計・実装したプロジェクトです�
 
 SD-AgentFoundry、SD-AgentFoundry-2D、兵頭竜樹氏の関連リポジトリから、コード、README、設定形式、プロンプト、画像、名称を使用・コピーしていません。
 
-`submission/assets/water-datacenter-concept.png`は本プロジェクト専用に生成した画像素材であり、関連研究や既存リポジトリから取得した画像ではありません。
+`submission/assets/water-datacenter-concept.png`はOpenAIの画像生成（gpt-image 2.0）で本プロジェクト専用に生成した概念図です。関連研究や既存リポジトリから取得した画像ではなく、実在施設や観測結果を示す証拠画像としては使用していません。
 
 ## 設計上の関連研究
 
@@ -23,6 +23,19 @@ SD-AgentFoundry、SD-AgentFoundry-2D、兵頭竜樹氏の関連リポジトリ�
   https://github.com/antirez/ds4
 
 DS4はOpenAI互換APIの外部ローカルサーバーとして接続します。DS4本体、モデル、モデル重み、キャッシュ、DS4由来コードは本リポジトリへ同梱しません。利用時はDS4側のライセンスとモデル側の利用条件を別途確認してください。
+
+## デモ動画の合成音声
+
+- VOICEVOX 0.25.2  
+  https://voicevox.hiroshiba.jp/
+- 音声ライブラリ: 玄野武宏（ノーマル）
+- 必須クレジット: `VOICEVOX:玄野武宏(CV:ガロ)`
+- VOICEVOXソフトウェア利用規約  
+  https://voicevox.hiroshiba.jp/term/
+- VirVox Project「VOICEVOXの利用規約」  
+  https://www.virvoxproject.com/voicevox%E3%81%AE%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84
+
+提出用デモ動画のナレーションは、インストール済みVOICEVOXをローカル実行して生成しました。キャラクター画像やVOICEVOX本体、音声モデルは同梱していません。動画終盤に必須クレジットを表示し、YouTube概要欄にも同じ表記を記載します。生成条件と区間は`submission/voicevox-narration.json`へ記録しています。生成音声を機械学習や音声モデル作成には使用しません。
 
 ## 公的データ・技術資料
 
@@ -79,5 +92,6 @@ Apache License 2.0は本プロジェクト独自のコード、文書、デー�
 - 同梱する第三者ソースコード: なし
 - 同梱するモデルまたはモデル重み: なし
 - 外部CDNから読み込むゲーム画面依存: なし
+- 外部生成ツール: VOICEVOX（本体・音声モデルは非同梱）
 
 将来、第三者コード、フォント、アイコン、データセット、モデルなどを同梱する場合は、その名称、入手元、バージョン、ライセンス、変更内容、必要な著作権表示をこの文書と、必要に応じて`LICENSE`または`NOTICE`へ追加してください。

@@ -111,14 +111,25 @@ def render(events: list[dict[str, Any]], water_rows: list[dict[str, Any]] | None
     provider_type = metadata.get("provider_type")
     is_mock = provider_type == "mock" or bool(metadata.get("mock"))
     is_ds4 = provider_type == "ds4"
+    fallback_used = bool(metadata.get("fallback_used"))
+    ds4_not_configured = metadata.get("selection_reason") == "ds4_not_configured"
     legacy_ds4 = (
         provider_type is None
         and metadata.get("model") == "deepseek-v4-flash"
         and "finish_reason" in metadata
     )
-    model = "MockProvider" if is_mock else metadata.get("model", "provider未確認")
+    if fallback_used:
+        model = "MockProvider（DS4接続失敗から自動切替）"
+    elif ds4_not_configured:
+        model = "MockProvider（DS4未設定）"
+    else:
+        model = "MockProvider" if is_mock else metadata.get("model", "provider未確認")
     provider_badge = (
-        "● REPRODUCIBLE MOCK"
+        "● MOCK · DS4 FALLBACK"
+        if fallback_used
+        else "● MOCK · DS4 NOT CONFIGURED"
+        if ds4_not_configured
+        else "● REPRODUCIBLE MOCK"
         if is_mock
         else "● REAL DS4 LOCAL INFERENCE"
         if is_ds4
